@@ -8,6 +8,8 @@ body, .app {
   background: white;
 }
 
+
+
 /* main page */
 
 .list-books-title {
@@ -103,6 +105,7 @@ body, .app {
   padding: 80px 10px 20px;
 }
 
+
 /* books grid */
 
 .books-grid {
@@ -111,7 +114,7 @@ body, .app {
   margin: 0;
 
   display: flex;
-  justify-content: center;
+  justify-content: left;
   flex-wrap: wrap;
 }
 .books-grid li {
@@ -121,16 +124,24 @@ body, .app {
 
 .book {
   width: 140px;
+  margin: 0 10px;
 }
 .book-title,
 .book-authors {
   font-size: 0.8em;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 .book-title {
   margin-top: 10px;
+
 }
 .book-authors {
-  color: #999;
+  color: #777;
+  /*margin-top: -10px;*/
 }
 
 .book-top {
@@ -138,6 +149,14 @@ body, .app {
   height: 200px;
   display: flex;
   align-items: flex-end;
+
+}
+
+.book-top img {
+  object-fit: scale-down;
+  height: 200px;
+  width: 140px;
+
 }
 
 .book-shelf-changer {
@@ -167,8 +186,53 @@ body, .app {
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   background: #eee;
 }
+
 .book-cover-title {
   padding: 20px 10px 0;
   text-align: center;
   font-size: 0.8em;
 }
+
+
+
+/*menu options - maybe not*/
+.dropdown {
+/*  position: relative;
+  display: inline-block;*/
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 6px 8px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown-content div {
+  color: black;
+  padding: 6px 8px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content div:hover {
+  background-color: #ddd;
+}
+
+.test:hover .dropdown-content {
+  display: block;
+}
+
