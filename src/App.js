@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as BooksAPI from './utils/BooksAPI.js'
 
 import  ListBooks from './bookshelf.js'
-
+import {Route} from 'react-router-dom'
 import './App.css';
 
 class App extends Component {
@@ -27,12 +27,21 @@ changeShelf = (bookID, newShelf) => {
       booksCopy.map((b) => {
           if(b.id === bookID) {
             b.shelf = newShelf
+            BooksAPI.update(b,newShelf).then(
+              console.log(b.title+" updated")
+            )
+
           }
         })
       this.setState(booksCopy)
+}
 
+removeBook = (bookID) => {
+  {//probably use a .filter to remove the book
+    //also call the api update function
+  }
+}
 
-    }
 
 
 
@@ -43,52 +52,55 @@ changeShelf = (bookID, newShelf) => {
     return (
 
       <div>
+
         <header className="list-books-title">
           <h1>MyReads</h1>
         </header>
 
+        <Route exact path="/" render={() => (
+
           <div>
+
             <div  className="bookshelf-title">
               <h2>Currently Reading</h2>
-
-
-                  <ListBooks
-                    books={this.state.books.filter((b) => b.shelf==='currentlyReading')}
-                    onChangeShelf={this.changeShelf}
-                   />
-                </div>
+              <div className='books-grid'>
+                <ListBooks
+                  books={this.state.books.filter((b) => b.shelf==='currentlyReading')}
+                  onChangeShelf={this.changeShelf}
+                 />
+              </div>
             </div>
 
             <div className="bookshelf-title">
               <h2 >Want to Read</h2>
               <div className='books-grid'>
-
-                  <ListBooks books={this.state.books.filter((b) => b.shelf==='wantToRead')}
+                <ListBooks books={this.state.books.filter((b) => b.shelf==='wantToRead')}
                     onChangeShelf={this.changeShelf}
-                   />
-                </div>
+                />
+              </div>
             </div>
 
             <div className="bookshelf-title">
               <h2 >Have Already Read</h2>
               <div className='books-grid'>
-
                   <ListBooks books={this.state.books.filter((b) => b.shelf==='read')}
                     onChangeShelf={this.changeShelf}
                    />
-                </div>
+              </div>
+            </div>
+
           </div>
+          )} //route "/""
+          />
 
+
+
+      <Route path="/search" render={({history}) =>
+      (<div></div>
+        )}
+      />
       </div>
-
-
-
-
-
-
-
-
-    );
+     ); //return
   }
 }
 
