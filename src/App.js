@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import * as BooksAPI from './utils/BooksAPI.js'
-
+import SearchBooks from './search.js'
 import  ListBooks from './bookshelf.js'
 import {Route} from 'react-router-dom'
 import './App.css';
+import {Link} from 'react-router-dom'
 
 class App extends Component {
 
@@ -54,6 +55,11 @@ removeBook = (bookID) => {
       <div>
 
         <header className="list-books-title">
+          <Link
+            to='/search'
+            className='open-search-link'
+            >Search
+          </Link>
           <h1>MyReads</h1>
         </header>
 
@@ -96,7 +102,11 @@ removeBook = (bookID) => {
 
 
       <Route path="/search" render={({history}) =>
-      (<div></div>
+      (<SearchBooks
+          myBooks = {this.state.books}
+
+
+      />
         )}
       />
       </div>
