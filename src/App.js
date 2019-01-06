@@ -5,7 +5,7 @@ import  ListBooks from './bookshelf.js'
 import {Route} from 'react-router-dom'
 import './App.css';
 import {Link} from 'react-router-dom'
-import sortBy from 'sort-by'
+// import sortBy from 'sort-by'
 
 class App extends Component {
 
@@ -22,10 +22,6 @@ class App extends Component {
 
 addBook = (book, newShelf) => {
 
-
-
-
-
 BooksAPI.update(book,newShelf).then(
               console.log(book.title+" updated")
             )
@@ -38,15 +34,15 @@ this.setState(state => ({
 }
 
 
-changeShelf = (bookID, newShelf) => {
+changeShelf = (book, newShelf) => {
 
       let booksCopy = this.state.books
       console.log(this.state.books)
       console.log(booksCopy)
 
-      booksCopy.map((b) => {
+      booksCopy.forEach((b) => {
 
-          if(b.id === bookID) {
+          if(b.id === book.id) {
             b.shelf = newShelf
             BooksAPI.update(b,newShelf).then(
               console.log(b.title+" updated")
@@ -58,9 +54,16 @@ changeShelf = (bookID, newShelf) => {
       this.setState(booksCopy)
 }
 
-removeBook = (bookID) => {
-  //probably use a .filter to remove the book
-    //also call the api update function
+removeBook = (book) => {
+  this.setState((state) => ({
+    books: state.books.filter((b) => b.id !== book.id)
+  }))
+
+  let newShelf="removed"
+  BooksAPI.update(book,newShelf).then(
+              console.log(book.title+" removed")
+            )
+
 
 }
 
@@ -88,8 +91,9 @@ removeBook = (bookID) => {
               <h2>Currently Reading</h2>
               <div className='books-grid'>
                 <ListBooks
-                  books={this.state.books.sort(sortBy('title')).filter((b) => b.shelf==='currentlyReading')}
+                  books={this.state.books.filter((b) => b.shelf==='currentlyReading')}
                   onChangeShelf={this.changeShelf}
+
                  />
               </div>
             </div>
@@ -97,8 +101,10 @@ removeBook = (bookID) => {
             <div className="bookshelf-title">
               <h2 >Want to Read</h2>
               <div className='books-grid'>
-                <ListBooks books={this.state.books.sort(sortBy('title')).filter((b) => b.shelf==='wantToRead')}
+                <ListBooks books={this.state.books.filter((b) => b.shelf==='wantToRead')}
                     onChangeShelf={this.changeShelf}
+
+
                 />
               </div>
             </div>
@@ -106,11 +112,17 @@ removeBook = (bookID) => {
             <div className="bookshelf-title">
               <h2 >Have Already Read</h2>
               <div className='books-grid'>
-                  <ListBooks books={this.state.books.sort(sortBy('title')).filter((b) => b.shelf==='read')}
+                  <ListBooks books={this.state.books.filter((b) => b.shelf==='read')}
                     onChangeShelf={this.changeShelf}
+
+
                    />
               </div>
             </div>
+
+
+
+
             <div className="open-search">
                <Link
                 to='/search'
@@ -125,15 +137,13 @@ removeBook = (bookID) => {
 
 
 
-      <Route path="/search" render={({history}) =>
-      (<SearchBooks
-
-          onAddBook={this.addBook}
-
-
-      />
+      <Route path="/search" render={({history}) => (
+          <SearchBooks
+            onAddBook={this.addBook}
+          />
         )}
       />
+
       </div>
      ); //return
   }

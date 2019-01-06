@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as BooksAPI from './utils/BooksAPI.js'
 import  ListBooks from './bookshelf.js'
 // import ListSearch from './ListSearch.js'
-import sortBy from 'sort-by'
+// import sortBy from 'sort-by'
 
 class SearchBooks extends Component {
 
@@ -29,7 +29,7 @@ class SearchBooks extends Component {
 
 
 
-		} else { this.setState({books:[], noBooks: false}) }
+		} else { this.setState({books:[], noBooks: true}) }
 	}
 
 
@@ -54,11 +54,14 @@ class SearchBooks extends Component {
 						/>
 					</div>
 				</div>
+				{this.state.noBooks && (
+					<div>No results...</div>
+				)}
 
-				<ListBooks books={this.state.books.sort(sortBy('title'))}
-                    onChangeShelf={this.onAddBook}
-                   />
-
+				<ListBooks
+					books={this.state.books}
+                    onChangeShelf={onAddBook}
+               />
 
 
 			</div>

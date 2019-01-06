@@ -10,7 +10,7 @@ class ListBooks extends Component {
 
 		const {books, onChangeShelf}=this.props
 
-		//books.sort(sortBy('title'))
+		books.sort(sortBy('title'))
 
 		return (
 
@@ -22,10 +22,10 @@ class ListBooks extends Component {
 							<img className='book-cover' src= {book.imageLinks.thumbnail} alt=''/>
 							<button className='book-shelf-changer  ' > </button>
 							<div className='dropdown-content'>
-								<a onClick={() => onChangeShelf(book.id, 'read')} >Already Read</a>
-								<a onClick={() => onChangeShelf(book.id, 'wantToRead')}>Want to Read</a>
-								<a onClick={() => onChangeShelf(book.id, 'currentlyReading')}>Reading</a>
-								<a>Delete</a>
+								<a onClick={() => onChangeShelf(book, 'read')} >Already Read</a>
+								<a onClick={() => onChangeShelf(book, 'wantToRead')}>Want to Read</a>
+								<a onClick={() => onChangeShelf(book, 'currentlyReading')}>Reading</a>
+								<a onClick={() => onChangeShelf(book, 'remove')}>Remove</a>
 							</div>
 						</div>
 						<div className='book-title'>
