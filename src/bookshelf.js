@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 
-
+import sortBy from 'sort-by'
 
 class ListBooks extends Component {
 
@@ -9,6 +9,8 @@ class ListBooks extends Component {
 	render() {
 
 		const {books, onChangeShelf}=this.props
+
+		//books.sort(sortBy('title'))
 
 		return (
 
