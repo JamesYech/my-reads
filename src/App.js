@@ -1,71 +1,82 @@
 import React, { Component } from 'react';
+import {Route} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import * as BooksAPI from './utils/BooksAPI.js'
 import SearchBooks from './search.js'
-import  ListBooks from './bookshelf.js'
-import {Route} from 'react-router-dom'
+import BookCase from './bookCase.js'
 import './App.css';
-import {Link} from 'react-router-dom'
-// import sortBy from 'sort-by'
+import {cleanUp} from './getBooks.js'
 
 class App extends Component {
 
-  state = {
-    books: []
-  }
+  	state = {
+		books: []
+  	}
 
   componentDidMount() {
-    BooksAPI.getAll().then((books) =>
-      this.setState({books})
-    )
-  }  //CDidMount
+	BooksAPI.getAll().then((books) => {
+			let cleanBooks = cleanUp(books)
+	  		this.setState({books:cleanBooks})
 
+	}
+	)
+  }
 
 addBook = (book, newShelf) => {
 
-BooksAPI.update(book,newShelf).then(
-              console.log(book.title+" updated")
-            )
-//
-book.shelf=newShelf
-this.setState(state => ({
-      books: state.books.concat([ book ])
-    }))
+	let duplicate = false
+	for (let item of this.state.books) {
+		if (book.id === item.id) {
+			console.log("book already in book case")
+			duplicate=true
+		}
+	}
+
+	if (!duplicate) {
+		BooksAPI.update(book,newShelf).then(
+				  console.log(book.title+" updated"),
+				  console.log(newShelf+" is shelf")
+				)
+			//
+			console.log("before"+this.state.books)
+			book.shelf=newShelf
+			this.setState(state => ({
+				  books: state.books.concat([ book ])
+				}))
+			console.log("after"+this.state.books)
+
+
+		} else {
+			this.changeShelf(book, newShelf)
+		}
+
+
+
 
 }
+
 
 
 changeShelf = (book, newShelf) => {
 
-      let booksCopy = this.state.books
-      console.log(this.state.books)
-      console.log(booksCopy)
 
-      booksCopy.forEach((b) => {
 
-          if(b.id === book.id) {
-            b.shelf = newShelf
-            BooksAPI.update(b,newShelf).then(
-              console.log(b.title+" updated")
-            )
+	  let booksCopy = this.state.books
+	  booksCopy.forEach((b) => {
 
-          }
+		  if(b.id === book.id) {
+			b.shelf = newShelf
 
-        })
-      this.setState(booksCopy)
-}
+			BooksAPI.update(b,newShelf)
+		  }
 
-removeBook = (book) => {
-  this.setState((state) => ({
-    books: state.books.filter((b) => b.id !== book.id)
-  }))
-
-  let newShelf="removed"
-  BooksAPI.update(book,newShelf).then(
-              console.log(book.title+" removed")
-            )
+		})
+	  this.setState(booksCopy)
 
 
 }
+
+
 
 
 
@@ -74,78 +85,41 @@ removeBook = (book) => {
 
 
 
-    return (
+	return (
+		<div>
 
-      <div>
+			<Route exact path="/" render={({history}) => (
+			  	<div>
+				  	<div>
+				  		<header className="list-books-title">
+				  			<h1>MyReads</h1>
+						</header>
+					</div>
 
-        <header className="list-books-title">
+					<BookCase
+						books={this.state.books}
+						onChangeShelf={this.changeShelf}
+					 />
+					 <div className="open-search">
+						   <Link
+							to='/search'
+							className='open-search-link'
+							>Search
+						  </Link>
+					</div>
+				</div>
+			)} />
 
-          <h1>MyReads</h1>
-        </header>
-
-        <Route exact path="/" render={() => (
-
-          <div>
-
-            <div  className="bookshelf-title">
-              <h2>Currently Reading</h2>
-              <div className='books-grid'>
-                <ListBooks
-                  books={this.state.books.filter((b) => b.shelf==='currentlyReading')}
-                  onChangeShelf={this.changeShelf}
-
-                 />
-              </div>
-            </div>
-
-            <div className="bookshelf-title">
-              <h2 >Want to Read</h2>
-              <div className='books-grid'>
-                <ListBooks books={this.state.books.filter((b) => b.shelf==='wantToRead')}
-                    onChangeShelf={this.changeShelf}
-
-
-                />
-              </div>
-            </div>
-
-            <div className="bookshelf-title">
-              <h2 >Have Already Read</h2>
-              <div className='books-grid'>
-                  <ListBooks books={this.state.books.filter((b) => b.shelf==='read')}
-                    onChangeShelf={this.changeShelf}
+			<Route path="/search" render={({history}) => (
+				<SearchBooks
+					onAddBook={this.addBook}
+					books={this.state.books}
+				/>
+			)} />
 
 
-                   />
-              </div>
-            </div>
-
-
-
-
-            <div className="open-search">
-               <Link
-                to='/search'
-                className='open-search-link'
-                >Search
-              </Link>
-            </div>
-
-          </div>
-          )} //route "/""
-          />
-
-
-
-      <Route path="/search" render={({history}) => (
-          <SearchBooks
-            onAddBook={this.addBook}
-          />
-        )}
-      />
-
-      </div>
-     ); //return
+		</div>
+	 ); //return
   }
 }
 
