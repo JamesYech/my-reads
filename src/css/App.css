@@ -9,44 +9,19 @@ body, .app {
 }
 
 
-
 /* main page */
-
 .list-books-title {
   padding: 10px 0;
   background: #2e7c31;
   text-align: center;
-  /*position: fixed;*/
   width: 100%;
- /* top: 0;
-  left: 0;*/
 }
+
 .list-books-title h1 {
   font-weight: 400;
   margin: 0;
   color: white;
 }
-
-.list-books-content {
-  padding: 0 0 80px;
-  flex: 1;
-}
-
-
-
-.row {
-  width: 100%;
-  display: flex;
-  flex-wrap: nowrap;
-/*  justify-content: center;
-  align-items: center;*/
-}
-
-
-
-
-
-
 
 .bookshelf {
   padding: 0 10px 20px;
@@ -61,27 +36,11 @@ body, .app {
 .bookshelf-title {
   border-bottom: 1px solid #dedede;
 }
-.bookshelf-books {
-  text-align: center;
-}
 
 .open-search {
   position: fixed;
   right: 25px;
   bottom: 25px;
-}
-.open-search a {
-  display: block;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #2e7d32;
-  background-image: url('./icons/add.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 28px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  font-size: 0;
 }
 
 .open-search-link {
@@ -90,39 +49,36 @@ body, .app {
   height: 50px;
   border-radius: 50%;
   background: #2e7d32;
-  background-image: url('./icons/add.svg');
+  background-image: url('../icons/add.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 28px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   font-size: 0;
 }
-/* search page */
 
+
+/* search page */
 .search-books-bar {
   position: fixed;
   width: 100vw;
   background: #FFFFFFFF;
-
-  /*top: 0;
-  left: 0;*/
   z-index: 5;
   display: flex;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 0 6px rgba(0,0,0,0.23);
 }
+
 .search-books-input-wrapper {
-  /*flex: 1;*/
   background: #e9e;
   width: 100%;
 }
+
 .search-books-bar input {
   width: 100%;
   padding: 15px 10px;
   font-size: 1.25em;
   border: none;
   outline: none;
-
-
 }
 
 .close-search {
@@ -132,7 +88,7 @@ body, .app {
   width: 50px;
   height: 53px;
   background: white;
-  background-image: url('./icons/arrow-back.svg');
+  background-image: url('../icons/arrow-back.svg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: 28px;
@@ -145,25 +101,20 @@ body, .app {
 
 
 /* books grid */
-
 .books-grid {
   list-style-type: none;
   padding: 0;
   margin: 0;
-
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
-}
-.books-grid li {
-  padding: 10px 15px;
-  text-align: left;
 }
 
 .book {
   width: 140px;
   margin: 0 10px;
 }
+
 .book-title,
 .book-authors {
   font-size: 0.8em;
@@ -171,30 +122,32 @@ body, .app {
   white-space: initial;
   overflow: hidden;
   text-overflow: ellipsis;
-
 }
+
 .book-title {
   margin-top: 10px;
-
 }
+
 .book-authors {
   color: #777;
-  /*margin-top: -10px;*/
-}
+ }
 
 .book-top {
   position: relative;
   height: 200px;
   display: flex;
   align-items: flex-end;
-
 }
 
 .book-top img {
   object-fit: scale-down;
   height: 200px;
   width: 140px;
+}
 
+.book-cover {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  background: #eee;
 }
 
 .book-shelf-changer {
@@ -205,81 +158,17 @@ body, .app {
   height: 40px;
   border-radius: 50%;
   background: #60ac5d;
-  background-image: url('./icons/arrow-drop-down.svg');
+  background-image: url('../icons/arrow-drop-down.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 20px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
-.book-shelf-changer select {
 
+.book-shelf-changer select {
   right: -100px;
   width: 100%;
   height: 100%;
   opacity: 0;
   cursor: pointer;
-  /*z-index: 10;*/
 }
-
-/*.book-shelf-changer:hover select {
-  display: block;
-}*/
-
-/* book cover */
-
-.book-cover {
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  background: #eee;
-}
-
-.book-cover-title {
-  padding: 20px 10px 0;
-  text-align: center;
-  font-size: 0.8em;
-}
-
-
-
-/*menu options - maybe not*/
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 6px 8px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown-content div {
-  color: black;
-  padding: 6px 8px;
-  text-decoration: none;
-  display: block;
-  cursor: pointer;
-}
-
-.dropdown-content div:hover {
-  background-color: #ddd;
-}
-
-.test:hover .dropdown-content {
-  display: block;
-}
-
-
-

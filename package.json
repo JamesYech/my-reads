@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "file-loader": "^3.0.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "url-loader": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

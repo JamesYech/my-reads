@@ -1,25 +1,24 @@
-import React, { Component } from 'react';
-
+import React, { Component } from 'react'
+import sortBy from 'sort-by'
+import PropTypes from 'prop-types'
 import DisplayBook from './books.js'
 
-import sortBy from 'sort-by'
-
-
 class ListBooks extends Component {
-
+	static propTypes = {
+	    books: PropTypes.array.isRequired,
+	    shelf: PropTypes.string.isRequired,
+	    onChangeShelf: PropTypes.func.isRequired
+  	}
 
 	render() {
 
 		const {books, shelf, onChangeShelf}=this.props
 		const menu =[
-
 			{id:'currentlyReading', name:'Reading'},
 			{id:'wantToRead', name:'Want to read'},
 			{id:'read', name:'Already read'},
 			{id:'none', name:'None'}
 		]
-
-
 
 		books.sort(sortBy('title'))
 
@@ -37,11 +36,8 @@ class ListBooks extends Component {
 			        />
                </div>
 			</div>
-
-		) //return
-	} //render
-}  //class
-
-
+		)
+	}
+}
 
 export default ListBooks

@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
-import * as BooksAPI from './utils/BooksAPI.js'
 import {Link} from 'react-router-dom'
+import PropTypes from 'prop-types'
+import * as BooksAPI from '../utils/BooksAPI.js'
 import DisplayBook from './books.js'
-import {cleanUp, setShelves} from './getBooks.js'
-
+import {cleanUp} from '../utils/helpers.js'
 
 class SearchBooks extends Component {
+
+	static propTypes = {
+	    onAddBook: PropTypes.func.isRequired
+  	}
 
 	state = {
 		query: '',
 		books: [],
 		noBooks: true , //no books returned
 	}
+
+	componentDidMount() {
+		document.getElementById('searchInput').focus()
+  	}
 
 	updateQuery = (query) => {
 		this.setState({query: query.trim()})
@@ -22,20 +30,11 @@ class SearchBooks extends Component {
 						: this.setState({books:[],noBooks: true})
 				})
 		} else { this.setState({books:[], noBooks: true}) }
-
-
-
-	}//end updateQuery
-
+	}
 
 	cleanUpBooks = () => {
-
-		let cleanBooks = cleanUp(this.state.books)
-		let setBooks = setShelves(cleanBooks, this.state.books)
-		this.setState({books:setBooks})
-
-
-
+		let cleanBooks = cleanUp(this.state.books, this.props.books, true)
+		this.setState({books:cleanBooks})
 	}
 
 	clearQuery = () => {
@@ -58,17 +57,18 @@ class SearchBooks extends Component {
 					<div >
 		            	<Link to='/' className='close-search'>Back</Link>
 		            </div>
-					<div className='search-books-input-wraper'>
+					<div className='search-books-input-wrapper'>
 						<input
+							id='searchInput'
 							type='text'
 							placeholder='Search books'
 							value={query}
 							onChange={(event) => this.updateQuery(event.target.value)}
+							autoFocus
 						/>
 					</div>
                	</div>
-
-				<div className='search-books-results' >
+				<div className='search-books-results'>
 					{this.state.noBooks && (
 						<div>No results...</div>
 					)}
@@ -79,9 +79,8 @@ class SearchBooks extends Component {
 			        />
                </div>
 			</div>
-		) //return
-	} //render
-} //class
-
+		)
+	}
+}
 
 export default SearchBooks
