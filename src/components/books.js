@@ -13,6 +13,7 @@ class DisplayBook extends Component {
 
 
 	listAuthors = (authors) => {
+		// console.log(authors)
 		let authorList = []
 		authors.forEach((author) => {
 			authorList.push(<div className='book-authors' key={author}>{author}</div>)
@@ -53,7 +54,7 @@ class DisplayBook extends Component {
 					))}
 				</div>
 			</div>
-		)
+		) //return
 	}
 }
 

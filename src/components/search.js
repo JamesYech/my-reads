@@ -22,18 +22,19 @@ class SearchBooks extends Component {
   	}
 
 	updateQuery = (query) => {
-		this.setState({query: query.trim()})
+		console.log('query')
+		this.setState({query: query})
 		if (query) {
 				BooksAPI.search(query).then((booksReturned) => {
 					booksReturned.length > 0
-						? this.setState({books:booksReturned, noBooks: false}, () => this.cleanUpBooks())
+						? this.cleanUpBooks(booksReturned)
 						: this.setState({books:[],noBooks: true})
 				})
 		} else { this.setState({books:[], noBooks: true}) }
 	}
 
-	cleanUpBooks = () => {
-		let cleanBooks = cleanUp(this.state.books, this.props.books, true)
+	cleanUpBooks = (booksReturned) => {
+		let cleanBooks = cleanUp(booksReturned, this.props.books, true)
 		this.setState({books:cleanBooks})
 	}
 
