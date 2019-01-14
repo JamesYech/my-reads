@@ -37,6 +37,7 @@ export function cleanUp(books, myBooks,checkShelves)  {
 						break
 					}
 				}
+				b1.shelf = "none"
 
 			}
 		}
