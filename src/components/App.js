@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {Route} from 'react-router-dom'
-import {Link} from 'react-router-dom'
+import {Route, Link, Switch} from 'react-router-dom'
 import * as BooksAPI from '../utils/BooksAPI.js'
 import SearchBooks from './search.js'
 import BookCase from './bookCase.js'
@@ -13,20 +12,17 @@ class App extends Component {
 		books: []
   	}
 
-
-  componentDidMount() {
-	BooksAPI.getAll().then((books) => {
-
-		let cleanBooks = cleanUp(books, false)
-  		this.setState({books:cleanBooks})
-	})
-  }
+	componentDidMount() {
+		BooksAPI.getAll().then((books) => {
+			let cleanBooks = cleanUp(books, false)
+	  		this.setState({books:cleanBooks})
+		})
+	}
 
 	addBook = (book, newShelf) => {
 		let duplicate = false
 		for (let item of this.state.books) {
 			if (book.id === item.id) {
-				console.log("book already in book case")
 				duplicate=true
 			}
 		}
@@ -35,50 +31,56 @@ class App extends Component {
 			BooksAPI.update(book,newShelf)
 				book.shelf=newShelf
 				this.setState(state => ({
-					  books: state.books.concat([ book ])
+					books: state.books.concat([ book ])
 			}))
 		} else { this.changeShelf(book, newShelf) }
 	}
 
 	changeShelf = (book, newShelf) => {
-		let booksCopy = this.state.books
-		booksCopy.forEach((b) => {
-			if(b.id === book.id) {
-				b.shelf = newShelf
-				BooksAPI.update(b,newShelf)
-			}
-		})
-		this.setState(booksCopy)
+		BooksAPI.update(book,newShelf)
+		book.shelf=newShelf
+		this.setState(prevState => ({
+			books: prevState.books
+				.filter(b => b.id !== book.id)
+				.concat(book)
+		}))
 	}
 
   	render() {
 		return (
 			<div>
-				<Route exact path="/" render={({history}) => (
-				  	<div>
+				<Switch>
+					<Route exact path="/" render={({history}) => (
 					  	<div>
-					  		<header className="list-books-title">
-					  			<h1>MyReads</h1>
-							</header>
+						  	<div>
+						  		<header className="list-books-title">
+						  			<h1>MyReads</h1>
+								</header>
+							</div>
+							<BookCase
+								books={this.state.books}
+								onChangeShelf={this.changeShelf}
+							/>
+							<div className="open-search">
+							   	<Link to='/search' className='open-search-link'>
+							   		Search
+							  	</Link>
+							</div>
 						</div>
-						<BookCase
+					)} />
+					<Route path="/search" render={({history}) => (
+						<SearchBooks
+							onAddBook={this.addBook}
 							books={this.state.books}
-							onChangeShelf={this.changeShelf}
 						/>
-						<div className="open-search">
-						   	<Link to='/search' className='open-search-link'>
-						   		Search
-						  	</Link>
+					)} />
+					<Route render= {() => (
+						<div>
+							<p>Hmmm...That page appears to have wandered off.  Try this one: </p>
+							<Link to="/">myReads Homepage</Link>
 						</div>
-					</div>
-				)} />
-
-				<Route path="/search" render={({history}) => (
-					<SearchBooks
-						onAddBook={this.addBook}
-						books={this.state.books}
-					/>
-				)} />
+					)} />
+				</Switch>
 			</div>
 	 	)
   	}

@@ -7,16 +7,21 @@
 //and set shelves accordingly
 export function cleanUp(books, myBooks,checkShelves)  {
 	let cleanBooks = books
-	console.log('cleanupTop')
 	if (cleanBooks.length > 0) {
-		console.log('cleanup')
 		for (let b1 of cleanBooks) {
-			console.log(b1.title + "-" + b1.authors)
+
+
+			//need to fix this
+
 			if (b1.authors && b1.authors[0]) {
 
 			} else {
 				b1.authors = ['No author listed']
 			}
+
+
+
+
 
 			if (b1.imageLinks && b1.imageLinks.thumbnail) {
 				b1.coverImage=b1.imageLinks.thumbnail
@@ -29,7 +34,6 @@ export function cleanUp(books, myBooks,checkShelves)  {
 				for (let b2 of myBooks) {
 					if (b1.id === b2.id) {
 						b1.shelf = b2.shelf
-						console.log(b1.shelf+"=="+b2.shelf)
 						break
 					}
 				}
