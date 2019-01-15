@@ -35,22 +35,9 @@ class App extends Component {
 		} else { this.changeShelf(book, newShelf) }
 	}
 
-// else { this.changeShelf(book, newShelf) }
-// else { this.setState(newChangeShelf(book, newShelf)) }
-
 	changeShelf = ( book, newShelf) => {
 		this.setState(newChangeShelf(this.state, {book, newShelf}))
 	}
-
-		// BooksAPI.update(book,newShelf)
-		// book.shelf=newShelf
-		// this.setState(prevState => ({
-		// 	books: prevState.books
-		// 		.filter(b => b.id !== book.id)
-		// 		.concat(book)
-		// }))
-
-
 
   	render() {
 		return (
@@ -78,7 +65,6 @@ class App extends Component {
 						<SearchBooks
 							onAddBook={this.addBook}
 							myBooks={this.state}
-
 						/>
 					)} />
 					<Route render= {() => (

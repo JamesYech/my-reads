@@ -25,8 +25,6 @@ class SearchBooks extends Component {
   	}
 
 	updateQuery = (query) => {
-		// console.log(query)
-		// console.log(this.state)
 		let checkShelves=true
 		this.setState({query: query})
 		if (query) {
@@ -36,12 +34,6 @@ class SearchBooks extends Component {
 						: this.setState({books:[],noBooks: true})
 				})
 		} else { this.setState({books:[], noBooks: true}) }
-	}
-
-
-
-	clearQuery = () => {
-		this.setState({ query: ''})
 	}
 
 	render()  {
@@ -62,7 +54,7 @@ class SearchBooks extends Component {
 		            </div>
 					<div className='search-books-input-wrapper'>
 						<DebounceInput
-							debounceTimeout={200}
+							debounceTimeout={700}
 							id='searchInput'
 							type='text'
 							placeholder='Search books'
@@ -76,8 +68,6 @@ class SearchBooks extends Component {
 					{this.state.noBooks && (
 						<div>No results...</div>
 					)}
-
-
 					<DisplayBook
 						books={this.state.books}
 	                    menu={menu}

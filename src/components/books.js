@@ -13,7 +13,6 @@ class DisplayBook extends Component {
 
 
 	listAuthors = (authors) => {
-		// console.log(authors)
 		let authorList = []
 		authors.forEach((author) => {
 			authorList.push(<div className='book-authors' key={author}>{author}</div>)
@@ -22,11 +21,9 @@ class DisplayBook extends Component {
 	}
 
 	render() {
-
 		const {books,menu, onMove} = this.props
 
 		books.sort(sortBy('title'))
-
 
 		return (
 			<div>
@@ -55,7 +52,7 @@ class DisplayBook extends Component {
 					))}
 				</div>
 			</div>
-		) //return
+		)
 	}
 }
 

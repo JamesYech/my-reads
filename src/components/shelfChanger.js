@@ -9,20 +9,13 @@ class ShelfChanger extends Component {
 	    onMove: PropTypes.func.isRequired
   	}
 
-
-
-
 	render() {
 		const {book, menu, onMove}=this.props
-
-
 
 		let optBlock = menu.map(opt => (
 			<option key={opt.id} value={opt.id} > {opt.name} </option>
 
 		))
-
-
 
 		return (
 			<div >
