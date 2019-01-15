@@ -15,10 +15,8 @@ class SearchBooks extends Component {
 	state = {
 		query: '',
 		books: [],
-		noBooks: true , //no books returned
+		noBooks: true //no books returned
 	}
-
-
 
 	componentDidMount() {
 		document.getElementById('searchInput').focus()
