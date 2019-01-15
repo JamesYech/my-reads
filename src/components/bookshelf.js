@@ -1,27 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import sortBy from 'sort-by'
 import PropTypes from 'prop-types'
 import DisplayBook from './books.js'
 
-class ListBooks extends Component {
-	static propTypes = {
-	    books: PropTypes.array.isRequired,
-	    shelf: PropTypes.string.isRequired,
-	    onChangeShelf: PropTypes.func.isRequired
-  	}
+const ListBooks = props => {
 
-//refactor as stateless component
-//   	const MyComponent = ({ myProp }) => {
-//   return <h1>{myProp} </h1>;
-// };
-
-// MyComponent.propTypes = {
-//   myProp: PropTypes.string
-// };
-
-	render() {
-
-		const {books, shelf, onChangeShelf}=this.props
+	const {books, shelf, onChangeShelf}=props
 		const menu =[
 			{id:'currentlyReading', name:'Reading'},
 			{id:'wantToRead', name:'Want to read'},
@@ -46,7 +30,12 @@ class ListBooks extends Component {
                </div>
 			</div>
 		)
-	}
+}
+
+ListBooks.propTypes = {
+	books: PropTypes.array.isRequired,
+	shelf: PropTypes.string.isRequired,
+	onChangeShelf: PropTypes.func.isRequired
 }
 
 export default ListBooks
