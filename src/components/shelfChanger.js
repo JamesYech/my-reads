@@ -1,33 +1,29 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
+const ShelfChanger = props => {
 
-class ShelfChanger extends Component {
-	static propTypes = {
-	    book: PropTypes.object.isRequired,
-	    menu: PropTypes.array.isRequired,
-	    onMove: PropTypes.func.isRequired
-  	}
+	const {book, menu, onMove}=props
+	let optBlock = menu.map(opt => (
+		<option key={opt.id} value={opt.id} > {opt.name} </option>
+	))
 
-	render() {
-		const {book, menu, onMove}=this.props
+	return (
+		<div >
+			<button className='book-shelf-changer'>
+				<select onChange={(event) => onMove(book, event.target.value)}  defaultValue={book.shelf}>
+					<option> Move to...</option>
+					{optBlock}
+				</select>
+			</button>
+		</div>
+	)
+}
 
-		let optBlock = menu.map(opt => (
-			<option key={opt.id} value={opt.id} > {opt.name} </option>
-
-		))
-
-		return (
-			<div >
-				<button className='book-shelf-changer'>
-					<select onChange={(event) => onMove(book, event.target.value)}  defaultValue={book.shelf}>
-						<option> Move to...</option>
-						{optBlock}
-					</select>
-				</button>
-			</div>
-		)
-	}
+ShelfChanger.propTypes = {
+	book: PropTypes.object.isRequired,
+	menu: PropTypes.array.isRequired,
+	onMove: PropTypes.func.isRequired
 }
 
 export default ShelfChanger
