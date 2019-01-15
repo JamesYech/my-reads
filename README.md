@@ -30,6 +30,8 @@ npm start
 A browser window should open with the myReads app displayed.  If it does not, open a browser and enter http://localhost:3000/ into the address bar.
 ```
 
+A live version of this App can be access at http://myreads.jdtech.net/
+
 ## Using the myReads App
 
 Books in the current collection are displayed on three 'shelves': Currently Reading, Want to Read, and Already Read.  A forth shelf, named Recently Removed, will only display book titles if a book has been removed from the other shelfs but selecting None from the drop down list.
