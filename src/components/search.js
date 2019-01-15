@@ -18,26 +18,27 @@ class SearchBooks extends Component {
 		noBooks: true , //no books returned
 	}
 
+
+
 	componentDidMount() {
 		document.getElementById('searchInput').focus()
   	}
 
 	updateQuery = (query) => {
-		console.log('query')
+		// console.log(query)
+		// console.log(this.state)
+		let checkShelves=true
 		this.setState({query: query})
 		if (query) {
-				BooksAPI.search(query).then((booksReturned) => {
-					booksReturned.length > 0
-						? this.cleanUpBooks(booksReturned)
+				BooksAPI.search(query).then((returnedBooks) => {
+					returnedBooks.length > 0
+						? this.setState(cleanUp(this.props.myBooks,{returnedBooks, checkShelves }))
 						: this.setState({books:[],noBooks: true})
 				})
 		} else { this.setState({books:[], noBooks: true}) }
 	}
 
-	cleanUpBooks = (booksReturned) => {
-		let cleanBooks = cleanUp(booksReturned, this.props.books, true)
-		this.setState({books:cleanBooks})
-	}
+
 
 	clearQuery = () => {
 		this.setState({ query: ''})
@@ -61,7 +62,7 @@ class SearchBooks extends Component {
 		            </div>
 					<div className='search-books-input-wrapper'>
 						<DebounceInput
-							debounceTimeout={800}
+							debounceTimeout={200}
 							id='searchInput'
 							type='text'
 							placeholder='Search books'
@@ -75,6 +76,8 @@ class SearchBooks extends Component {
 					{this.state.noBooks && (
 						<div>No results...</div>
 					)}
+
+
 					<DisplayBook
 						books={this.state.books}
 	                    menu={menu}

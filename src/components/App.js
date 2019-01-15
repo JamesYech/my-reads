@@ -3,7 +3,7 @@ import {Route, Link, Switch} from 'react-router-dom'
 import * as BooksAPI from '../utils/BooksAPI.js'
 import SearchBooks from './search.js'
 import BookCase from './bookCase.js'
-import {cleanUp} from '../utils/helpers.js'
+import {cleanUp, newChangeShelf} from '../utils/helpers.js'
 import '../css/App.css';
 
 class App extends Component {
@@ -13,9 +13,9 @@ class App extends Component {
   	}
 
 	componentDidMount() {
-		BooksAPI.getAll().then((books) => {
-			let cleanBooks = cleanUp(books, false)
-	  		this.setState({books:cleanBooks})
+		let checkShelves=false
+		BooksAPI.getAll().then((returnedBooks) => {
+	  		this.setState(cleanUp(this.prevState,{returnedBooks, checkShelves }))
 		})
 	}
 
@@ -26,7 +26,6 @@ class App extends Component {
 				duplicate=true
 			}
 		}
-
 		if (!duplicate) {
 			BooksAPI.update(book,newShelf)
 				book.shelf=newShelf
@@ -36,15 +35,22 @@ class App extends Component {
 		} else { this.changeShelf(book, newShelf) }
 	}
 
-	changeShelf = (book, newShelf) => {
-		BooksAPI.update(book,newShelf)
-		book.shelf=newShelf
-		this.setState(prevState => ({
-			books: prevState.books
-				.filter(b => b.id !== book.id)
-				.concat(book)
-		}))
+// else { this.changeShelf(book, newShelf) }
+// else { this.setState(newChangeShelf(book, newShelf)) }
+
+	changeShelf = ( book, newShelf) => {
+		this.setState(newChangeShelf(this.state, {book, newShelf}))
 	}
+
+		// BooksAPI.update(book,newShelf)
+		// book.shelf=newShelf
+		// this.setState(prevState => ({
+		// 	books: prevState.books
+		// 		.filter(b => b.id !== book.id)
+		// 		.concat(book)
+		// }))
+
+
 
   	render() {
 		return (
@@ -71,7 +77,8 @@ class App extends Component {
 					<Route path="/search" render={({history}) => (
 						<SearchBooks
 							onAddBook={this.addBook}
-							books={this.state.books}
+							myBooks={this.state}
+
 						/>
 					)} />
 					<Route render= {() => (

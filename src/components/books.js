@@ -27,6 +27,7 @@ class DisplayBook extends Component {
 
 		books.sort(sortBy('title'))
 
+
 		return (
 			<div>
 				<div className='books-grid'>

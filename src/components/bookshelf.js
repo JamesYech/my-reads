@@ -10,6 +10,15 @@ class ListBooks extends Component {
 	    onChangeShelf: PropTypes.func.isRequired
   	}
 
+//refactor as stateless component
+//   	const MyComponent = ({ myProp }) => {
+//   return <h1>{myProp} </h1>;
+// };
+
+// MyComponent.propTypes = {
+//   myProp: PropTypes.string
+// };
+
 	render() {
 
 		const {books, shelf, onChangeShelf}=this.props
