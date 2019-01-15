@@ -27,9 +27,10 @@ class SearchBooks extends Component {
 		this.setState({query: query})
 		if (query) {
 				BooksAPI.search(query).then((returnedBooks) => {
-					returnedBooks.length > 0
-						? this.setState(cleanUp(this.props.myBooks,{returnedBooks, checkShelves }))
-						: this.setState({books:[],noBooks: true})
+					if (returnedBooks.length > 0) {
+						this.setState(cleanUp(this.props.myBooks,{returnedBooks, checkShelves }))
+						this.setState({noBooks: false})
+					} else {this.setState({books:[],noBooks: true})}
 				})
 		} else { this.setState({books:[], noBooks: true}) }
 	}
