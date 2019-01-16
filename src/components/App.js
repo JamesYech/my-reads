@@ -64,7 +64,7 @@ class App extends Component {
 					<Route path="/search" render={({history}) => (
 						<SearchBooks
 							onAddBook={this.addBook}
-							myBooks={this.state}
+							myBooks={this.state.books}
 						/>
 					)} />
 					<Route render= {() => (

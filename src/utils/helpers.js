@@ -10,10 +10,10 @@ export function cleanUp(state, props) {
 
 	if (props.returnedBooks) {
 		for (let b1 of props.returnedBooks) {
-			if (!b1.authors && !b1.authors[0]) {
+			if (!(b1 && b1.authors && b1.authors.length && b1.authors[0])) {
 				b1.authors =['Unlisted Author']
 			}
-			if (b1.imageLinks && b1.imageLinks.thumbnail) {
+			if (b1 && b1.imageLinks && b1.imageLinks.thumbnail) {
 				b1.coverImage=b1.imageLinks.thumbnail
 			} else {
 				b1.coverImage=noCover
@@ -22,7 +22,7 @@ export function cleanUp(state, props) {
 	}
 	if (props.checkShelves) {
 		for (let b1 of props.returnedBooks) {
-			let b2 = state.books.filter(b => b.id === b1.id)
+			let b2 = state.filter(b => b.id === b1.id)
 			if (b2.length > 0) {
 				b1.shelf = b2[0].shelf
 			} else {
